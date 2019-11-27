@@ -409,8 +409,8 @@ public:
 
 
 	static void ReadBrowseMode(void);
+	static void ReadGPIOUserInput(void);
 	static void ReadEmulationMode1541(void);
-	static void ReadButtonsEmulationMode(void);
 	static void ReadEmulationMode1581(void);
 
 	static void WaitUntilReset(void)

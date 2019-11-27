@@ -860,7 +860,7 @@ EXIT_TYPE Emulate1541(FileBrowser* fileBrowser)
 #endif
 		}
 
-		IEC_Bus::ReadButtonsEmulationMode();
+		IEC_Bus::ReadGPIOUserInput();
 
 		// Other core will check the uart (as it is slow) (could enable uart irqs - will they execute on this core?)
 #if not defined(EXPERIMENTALZERO)
