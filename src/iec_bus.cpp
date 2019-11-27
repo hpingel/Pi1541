@@ -20,8 +20,6 @@
 
 //#define REAL_XOR 1
 
-static int buttonCount = sizeof(ButtonPinFlags) / sizeof(unsigned);
-
 u32 IEC_Bus::oldClears = 0;
 u32 IEC_Bus::oldSets = 0;
 u32 IEC_Bus::PIGPIO_MASK_IN_ATN = 1 << PIGPIO_ATN;
@@ -78,7 +76,7 @@ RotaryEncoder IEC_Bus::rotaryEncoder;
 bool IEC_Bus::rotaryEncoderEnable;
 
 
-void IEC_Bus::ReadGPIOUserInput(void)
+void IEC_Bus::ReadGPIOUserInput( int buttonCount)
 {
 	//ROTARY: Added for rotary encoder support - 09/05/2019 by Geo...
 	if (IEC_Bus::rotaryEncoderEnable == true)
@@ -140,7 +138,7 @@ void IEC_Bus::ReadGPIOUserInput(void)
 void IEC_Bus::ReadBrowseMode(void)
 {
 	gplev0 = read32(ARM_GPIO_GPLEV0);
-	ReadGPIOUserInput();
+	ReadGPIOUserInput(buttonCount);
 
 	bool ATNIn = (gplev0 & PIGPIO_MASK_IN_ATN) == (invertIECInputs ? PIGPIO_MASK_IN_ATN : 0);
 	if (PI_Atn != ATNIn)
@@ -278,7 +276,7 @@ void IEC_Bus::ReadEmulationMode1581(void)
 	IOPort* portB = 0;
 	gplev0 = read32(ARM_GPIO_GPLEV0);
 
-	ReadGPIOUserInput();
+	ReadGPIOUserInput(3);//check less button states, save time
 
 	portB = port;
 
